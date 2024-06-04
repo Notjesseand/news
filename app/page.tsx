@@ -3,7 +3,11 @@ import React, { useState, useEffect } from "react";
 import { lineSpinner } from "ldrs";
 import Link from "next/link";
 import Nav from "@/components/nav";
-
+import { fetchData } from "@/api/fetchTrending";
+import TrendingCarousel from "@/components/home/trendingCarousel";
+import PoliticsCarousel from "@/components/home/politicsCarousel";
+import SportsCarousel from "@/components/home/sportsCarousel";
+import Categories from "@/components/home/categories";
 // Default values shown
 
 interface News {
@@ -21,32 +25,9 @@ interface News {
 }
 
 const Page = () => {
-  const key = `wJN42eNUnoO8qshic71phajCgmk1eAsQ`;
-
   const [news, setNews] = useState<News[]>([]);
   const [loading, setLoading] = useState(false);
 
-  const fetchData = async () => {
-    setLoading(true);
-    try {
-      const response = await fetch(
-        `https://api.nytimes.com/svc/mostpopular/v2/viewed/1.json?api-key=${key}`,
-        { cache: "force-cache", next: { revalidate: 10000 } }
-      );
-      const data = await response.json();
-      setNews(data.results);
-      console.log(data.results[0].media[0]["media-metadata"][0].url);
-      setLoading(false);
-    } catch (error) {
-      console.log("error fetching data:", error);
-    }
-  };
-
-  useEffect(() => {
-    fetchData();
-  }, []);
-
-  // loading animation
   lineSpinner.register();
   if (loading) {
     return (
@@ -62,32 +43,32 @@ const Page = () => {
   }
 
   return (
-    <div className="font-nunito ">
+    <div className="font-nunito bg-slate-100 pb-20 overflow-x-hidden">
       <Nav />
-      <div className="grid grid-cols-4 px-10 gap-5">
-        {news.map((news, index) => (
-          <div key={index}>
-            <div
-              className=" aspect-square w-full bg-no-repeat bg-cover rounded-lg"
-              style={{
-                backgroundImage: `url(${
-                  news.media[0] &&
-                  news.media[0]["media-metadata"][0] &&
-                  news.media[0]["media-metadata"][2].url
-                })`,
-              }}
-            ></div>
-            <Link
-              href={`${news.url}`}
-              target="_blank"
-              className="mt-3 flex font-nunito"
-            >
-              {" "}
-              {news.abstract}
-            </Link>
-          </div>
-        ))}
+
+      <div className="grid grid-cols-4 px-10">
+        {/* trending news */}
+        <div className="flex flex-col items-center overflow-x-hidden">
+          <p className="text-center text-lg font-nunito mt-4 pb-2 font-bold">
+            Trending News
+          </p>
+          <TrendingCarousel />
+        </div>
+        {/* politics */}
+        <div className="px-10 flex flex-col col-span-2 overflow-x-hidden">
+          <p className="text-center text-lg font-nunito mt-4 font-bold pb-2">
+            Politics
+          </p>
+          <PoliticsCarousel />
+        </div>{" "}
+        <div className="pr-10 overflow-x-hidden">
+          <p className="text-center text-lg font-nunito mt-4 pb-2 font-bold">
+            Sports
+          </p>
+          <SportsCarousel />
+        </div>
       </div>
+      <Categories />
     </div>
   );
 };
