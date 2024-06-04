@@ -26,6 +26,9 @@ const trendingCarousel = () => {
   const [loading, setLoading] = useState(false);
   const [news, setNews] = useState<News[]>([]);
 
+  const news1 = news.slice(0, news.length / 2);
+  const news2 = news.slice(news.length / 2);
+
   // fetching data when component mounts
   useEffect(() => {
     setLoading(true);
@@ -53,49 +56,97 @@ const trendingCarousel = () => {
     );
   }
   return (
-    <Carousel
-      opts={{
-        loop: true,
-      }}
-      plugins={[
-        Autoplay({
-          delay: 10000,
-        }),
-      ]}
-      className="w-full rounded-lg"
-    >
-      <CarouselContent>
-        {news &&
-          news.map((news, index) => (
-            <CarouselItem key={index} className="w-full">
-              <div
-                className=" aspect-square w-full  bg-no-repeat bg-center bg-cover rounded-lg"
-                style={{
-                  backgroundImage: `url(${
-                    news?.multimedia &&
-                    news?.multimedia[2] &&
-                    news?.multimedia[0]?.url
-                  })`,
-                }}
-              ></div>
-              <Link
-                href={`${news.url}`}
-                target="_blank"
-                className="mt-3 flex font-nunito"
-              >
-                {" "}
-                {news.abstract.length > 120 ? (
-                  <p>{news.abstract.slice(0, 120)}...</p>
-                ) : (
-                  news.abstract
-                )}
-              </Link>
-            </CarouselItem>
-          ))}
-      </CarouselContent>
-      {/* <CarouselPrevious />
+    <>
+      <Carousel
+        opts={{
+          loop: true,
+        }}
+        plugins={[
+          Autoplay({
+            delay: 10000,
+          }),
+        ]}
+        className="w-full rounded-lg"
+      >
+        <CarouselContent>
+          {news &&
+            news1.map((news, index) => (
+              <CarouselItem key={index} className="w-full">
+                <Link
+                  href={`${news.url}`}
+                  className=" aspect-square w-full flex bg-no-repeat bg-center bg-cover rounded-lg"
+                  style={{
+                    backgroundImage: `url(${
+                      news?.multimedia &&
+                      news?.multimedia[2] &&
+                      news?.multimedia[0]?.url
+                    })`,
+                  }}
+                ></Link>
+                <Link
+                  href={`${news.url}`}
+                  target="_blank"
+                  className="mt-3 flex font-nunito"
+                >
+                  {" "}
+                  {news.abstract.length > 120 ? (
+                    <p>{news.abstract.slice(0, 120)}...</p>
+                  ) : (
+                    news.abstract
+                  )}
+                </Link>
+              </CarouselItem>
+            ))}
+        </CarouselContent>
+        {/* <CarouselPrevious />
       <CarouselNext /> */}
-    </Carousel>
+      </Carousel>
+
+      <Carousel
+        opts={{
+          loop: true,
+        }}
+        plugins={[
+          Autoplay({
+            delay: 10000,
+          }),
+        ]}
+        className="w-full rounded-lg"
+      >
+        <CarouselContent>
+          {news &&
+            news2.map((news, index) => (
+              <CarouselItem key={index} className="w-full">
+                <Link
+                  href={`${news.url}`}
+                  className=" aspect-square w-full flex bg-no-repeat bg-center bg-cover rounded-lg"
+                  style={{
+                    backgroundImage: `url(${
+                      news?.multimedia &&
+                      news?.multimedia[2] &&
+                      news?.multimedia[0]?.url
+                    })`,
+                  }}
+                ></Link>
+                <Link
+                  href={`${news.url}`}
+                  target="_blank"
+                  className="mt-3 flex font-nunito"
+                >
+                  {" "}
+                  {news.abstract.length > 120 ? (
+                    <p>{news.abstract.slice(0, 120)}...</p>
+                  ) : (
+                    news.abstract
+                  )}
+                </Link>
+              </CarouselItem>
+            ))}
+        </CarouselContent>
+        {/* <CarouselPrevious />
+      <CarouselNext /> */}
+      </Carousel>
+    </>
   );
 };
 

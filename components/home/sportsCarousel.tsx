@@ -25,6 +25,8 @@ interface News {
 const sportsCarousel = () => {
   const [loading, setLoading] = useState(false);
   const [news, setNews] = useState<News[]>([]);
+  const news1 = news.slice(0, news.length / 2);
+  const news2 = news.slice(news.length / 2);
 
   // fetching data when component mounts
   useEffect(() => {
@@ -53,45 +55,88 @@ const sportsCarousel = () => {
     );
   }
   return (
-    <Carousel
-      opts={{
-        loop: true,
-      }}
-      plugins={[
-        Autoplay({
-          delay: 10000,
-        }),
-      ]}
-      className="w-full rounded-lg"
-    >
-      <CarouselContent>
-        {news &&
-          news.map((news, index) => (
-            <CarouselItem key={index}>
-              <div
-                className=" aspect-square  bg-no-repeat bg-center bg-cover rounded-lg"
-                style={{
-                  backgroundImage: `url(${
-                    news?.multimedia &&
-                    news?.multimedia[2] &&
-                    news?.multimedia[0]?.url
-                  })`,
-                }}
-              ></div>
-              <Link
-                href={`${news.url}`}
-                target="_blank"
-                className="mt-3 flex font-nunito"
-              >
-                {" "}
-                {news.abstract}
-              </Link>
-            </CarouselItem>
-          ))}
-      </CarouselContent>
-      {/* <CarouselPrevious />
+    <>
+      <Carousel
+        opts={{
+          loop: true,
+        }}
+        plugins={[
+          Autoplay({
+            delay: 10000,
+          }),
+        ]}
+        className="w-full rounded-lg"
+      >
+        <CarouselContent>
+          {news &&
+            news1.map((news, index) => (
+              <CarouselItem key={index}>
+                <div
+                  className=" aspect-square  bg-no-repeat bg-center bg-cover rounded-lg"
+                  style={{
+                    backgroundImage: `url(${
+                      news?.multimedia &&
+                      news?.multimedia[2] &&
+                      news?.multimedia[0]?.url
+                    })`,
+                  }}
+                ></div>
+                <Link
+                  href={`${news.url}`}
+                  target="_blank"
+                  className="mt-3 flex font-nunito"
+                >
+                  {" "}
+                  {news.abstract}
+                </Link>
+              </CarouselItem>
+            ))}
+        </CarouselContent>
+        {/* <CarouselPrevious />
       <CarouselNext /> */}
-    </Carousel>
+      </Carousel>
+
+      {/* carousel 2 */}
+      <Carousel
+        opts={{
+          loop: true,
+        }}
+        plugins={[
+          Autoplay({
+            delay: 10000,
+          }),
+        ]}
+        className="w-full rounded-lg"
+      >
+        <CarouselContent>
+          {news &&
+            news2.map((news, index) => (
+              <CarouselItem key={index}>
+                <div
+                  className=" aspect-square  bg-no-repeat bg-center bg-cover rounded-lg"
+                  style={{
+                    backgroundImage: `url(${
+                      news?.multimedia &&
+                      news?.multimedia[2] &&
+                      news?.multimedia[0]?.url
+                    })`,
+                  }}
+                ></div>
+                <Link
+                  href={`${news.url}`}
+                  target="_blank"
+                  className="mt-3 flex font-nunito"
+                >
+                  {" "}
+                  {news.abstract}
+                </Link>
+              </CarouselItem>
+            ))}
+        </CarouselContent>
+        {/* <CarouselPrevious />
+      <CarouselNext /> */}
+      </Carousel>
+    </>
   );
 };
 
