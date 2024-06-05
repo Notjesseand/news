@@ -25,6 +25,9 @@ interface News {
 const politicsCarousel = () => {
   const [loading, setLoading] = useState(false);
   const [news, setNews] = useState<News[]>([]);
+  const news1 = news.slice(0, news.length / 3);
+  const news2 = news.slice(news.length / 3, (news.length / 3) * 2);
+  const news3 = news.slice(0, news.length / 3);
 
   // fetching data when component mounts
   useEffect(() => {
@@ -32,7 +35,6 @@ const politicsCarousel = () => {
     const fetchTrending = async () => {
       const response = await fetchData("politics");
       setNews(response);
-      console.log(response);
       setLoading(false);
     };
     fetchTrending();
@@ -57,7 +59,7 @@ const politicsCarousel = () => {
       <Carousel
         plugins={[
           Autoplay({
-            delay: 7000,
+            delay: 12000,
           }),
         ]}
         className="rounded-lg w-full flex"
@@ -65,10 +67,11 @@ const politicsCarousel = () => {
       >
         <CarouselContent>
           {news &&
-            news.map((news, index) => (
+            news1.map((news, index) => (
               <CarouselItem key={index}>
-                <div
-                  className="w-full aspect-square bg-no-repeat bg-cover rounded-lg bg-center"
+                <Link
+                  href={news.url}
+                  className="w-full flex aspect-[3/2] bg-no-repeat bg-cover rounded-lg bg-center"
                   style={{
                     backgroundImage: `url(${
                       news?.multimedia &&
@@ -76,11 +79,50 @@ const politicsCarousel = () => {
                       news?.multimedia[0]?.url
                     })`,
                   }}
-                ></div>
+                ></Link>
                 <Link
                   href={`${news.url}`}
                   target="_blank"
-                  className="mt-3 flex font-nunito"
+                  className="mt-2 mx-2 flex font-nunito leading-5 underline"
+                >
+                  {" "}
+                  {news.abstract}
+                </Link>
+              </CarouselItem>
+            ))}
+        </CarouselContent>
+        {/* <CarouselPrevious />
+        <CarouselNext /> */}
+      </Carousel>
+      {/* second carousel */}
+      <Carousel
+        plugins={[
+          Autoplay({
+            delay: 12000,
+          }),
+        ]}
+        className="rounded-lg w-full flex"
+        // orientation="vertical"
+      >
+        <CarouselContent>
+          {news &&
+            news2.map((news, index) => (
+              <CarouselItem key={index}>
+                <Link
+                  href={news.url}
+                  className="w-full flex aspect-[3/1] bg-no-repeat bg-cover rounded-lg bg-center"
+                  style={{
+                    backgroundImage: `url(${
+                      news?.multimedia &&
+                      news?.multimedia[2] &&
+                      news?.multimedia[0]?.url
+                    })`,
+                  }}
+                ></Link>
+                <Link
+                  href={`${news.url}`}
+                  target="_blank"
+                  className="mt-2 mx-2 flex font-nunito leading-5 underline"
                 >
                   {" "}
                   {news.abstract}

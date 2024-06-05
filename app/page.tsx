@@ -9,6 +9,7 @@ import PoliticsCarousel from "@/components/home/politicsCarousel";
 import SportsCarousel from "@/components/home/sportsCarousel";
 import Categories from "@/components/home/categories";
 import { MdSportsBasketball } from "react-icons/md";
+import Entertainment from "@/components/home/science";
 // Default values shown
 
 interface News {
@@ -70,7 +71,9 @@ const Page = () => {
           <SportsCarousel />
         </div>
       </div>
-      <Categories />
+      <div className="grid grid-cols-3">
+        <Entertainment />
+      </div>
     </div>
   );
 };
