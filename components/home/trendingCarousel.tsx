@@ -27,7 +27,7 @@ const trendingCarousel = () => {
   const [news, setNews] = useState<News[]>([]);
 
   const news1 = news.slice(0, news.length / 2);
-  const news2 = news.slice(news.length / 2);
+  const news2 = news.slice(news.length / 2 + 1);
 
   // fetching data when component mounts
   useEffect(() => {
@@ -86,11 +86,11 @@ const trendingCarousel = () => {
                 <Link
                   href={`${news.url}`}
                   target="_blank"
-                  className="mt-3 flex font-nunito"
+                  className="mt-3 flex font-nunito leading-5 underline"
                 >
                   {" "}
-                  {news.abstract.length > 120 ? (
-                    <p>{news.abstract.slice(0, 120)}...</p>
+                  {news.abstract.length > 140 ? (
+                    <p>{news.abstract.slice(0, 140)}...</p>
                   ) : (
                     news.abstract
                   )}
@@ -131,11 +131,11 @@ const trendingCarousel = () => {
                 <Link
                   href={`${news.url}`}
                   target="_blank"
-                  className="mt-3 flex font-nunito"
+                  className="mt-3 flex font-nunito leading-5 underline"
                 >
                   {" "}
-                  {news.abstract.length > 120 ? (
-                    <p>{news.abstract.slice(0, 120)}...</p>
+                  {news.abstract.length > 140 ? (
+                    <p>{news.abstract.slice(0, 140)}...</p>
                   ) : (
                     news.abstract
                   )}
